@@ -60,7 +60,6 @@ class DecisionTreeRegressor:
 
 
 
-    # Method to determine the best split based on the Gini impurity
     def _best_split(self, X, y):
         best_feature_index = None
         best_threshold = None
