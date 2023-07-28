@@ -90,6 +90,7 @@ if cost < best_cost:
 #### We do not divide by the number of values like in a variance/MSE calculation as this does not change the result much and only adds unnecessary arithmetic.
 
 ### Tree Nodes
+
 #### Now that we know our functions then we can start the class 
 
 # Node class to represent nodes in the decision tree
