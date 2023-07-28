@@ -208,3 +208,45 @@ class DecisionTreeRegressor:
 
 #### Finally in our final if statement we make a prediction. We take the root nodes feature_index and threshold, and if any of the values in the X 
 [feature_index] column are less than the threshold then recurse the number to the nodes left parameter and do the predict method again until we get the node that contains a value (leaf node). 
+
+### Random Forest
+
+#### The Random Forest model is an ensemble method.We now start our RandomForestRegressor Class by first setting up some variables.
+
+```
+class RandomForestRegressor:
+    def __init__(self, n_estimators=100, min_samples_split=2, max_depth=2):
+        self.n_estimators = n_estimators
+        self.min_samples_split = min_samples_split
+        self.max_depth = max_depth
+        self.trees = []
+```
+#### We encounter some similar variables such as min_samples_split and max_depth. These parameters function the same as they are intended for DecisionTreeRegressor class. 
+#### One new variable is n_estimators, this is the amount of decision trees that will be made. And self.trees is the list that will hold our decision trees.
+```
+    def bootstrap_sample(self, X, y):
+        n_samples = X.shape[0]
+        idxs = np.random.choice(n_samples, size=n_samples, replace=True)
+        return X[idxs], y[idxs]
+```
+#### We now define a method called bootstrap_samples which implements a technique called Bootstrapping which essentially creates subsets of data from the data. This method uses this technique then returns the resampled data for our decision trees.
+```
+    def fit(self, X, y):
+        self.trees = []
+        for _ in range(self.n_estimators):
+            tree = DecisionTreeRegressor(min_samples_split=self.min_samples_split, max_depth=self.max_depth)
+            X_sample, y_sample = self.bootstrap_sample(X, y)
+            tree.fit(X_sample, y_sample)
+            self.trees.append(tree)
+```
+### Now we define the fit function, which as we know is for teaching the model the data. 
+
+#### In this method we start by bringing in the classes trees list. A for loop follows that will loop as many times as our n_estimators variable. 
+
+#### This for loop creates a DecisionTreeRegressor instance with our parameters, and sets it to the tree variable every loop, the following line creates the bootstrap samples of X, Y and returns the new sampled data. The tree is then trained using the fit method and then appended to the trees list, creating all our decision trees.
+```
+    def predict(self, X):
+        tree_preds = np.array([tree.predict(X) for tree in self.trees])
+        return np.mean(tree_preds, axis=0)
+```
+#### The last method is used to predict. By utilizing list comprehension, we are able to create multiple predictions by looping through all our trees and save them to the list and we just average the values and get our result.
