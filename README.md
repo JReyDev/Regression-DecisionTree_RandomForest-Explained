@@ -20,7 +20,7 @@ def _best_split(self, X, y):
 #### best_cost is our variance/MSE of the data group to its average value when a split is made, WE ARE LOOKING FOR THE SPLIT WITH THE LOWEST COST. It is by default set to np.inf as any number is less than positive infinity, this sets the first split cost found to be the lowest until another lower cost is found.
 
 ```
-# Iterate through all features
+#Iterate through all features
         for feature_index in range(X.shape[1]):
             # Check all possible thresholds
             possible_thresholds = np.unique(X[:, feature_index])
