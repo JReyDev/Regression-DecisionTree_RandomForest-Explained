@@ -149,3 +149,62 @@ class DecisionTreeRegressor:
 #### The statement then sets the variable, node, to an instance of the class DecisionNode() then sets self.root to node, this is our root node.
 
 #### The method then checks if any of our stopping conditions have been met, if so then get the average of the remaining samples in Y and assign it to the nodes.value parameter.
+
+```
+        feature_index, threshold = self._best_split(X, y)
+```
+
+#### The next line finds the feature_index (column index) and threshold (value) with the lowest cost to find the values that are most similar.
+
+```
+        if feature_index is None or threshold is None:
+            node.value = np.mean(y)
+            return
+
+        node.feature_index = feature_index
+        node.threshold = threshold
+```
+### Both feature_index and threshold variables are checked if a split was unable to be found then set the nodes.value, which would make it a leaf node, to the mean of Y values.
+#### If feature_index and threshold are found by the method, then set the nodes variables to each variable respectively.
+
+```
+        node.left = DecisionNode()
+        node.right = DecisionNode()
+
+        # Create boolean mask for split
+        left_indices = X[:, feature_index] < threshold
+        right_indices = X[:, feature_index] >= threshold
+
+        # Perform recursion
+        self.fit(X[left_indices], y[left_indices], node.left, depth + 1)
+        self.fit(X[right_indices], y[right_indices], node.right, depth + 1)
+```
+
+#### Then, the nodes variables self.left and self.right are then set to another instance of the class DecisionNode() and are now new nodes and represent a split or “new level”.
+
+#### Now we use the variables left_indices and right_indices to split the data based on the feature_index and threshold we calculated earlier.
+
+#### The root node for the tree is now created.
+
+#### The last two lines call the fit method using recursion on the left and right nodes and add a 1 to depth every loop to count the tree levels. This will now recurse until one of the stopping conditions is met.
+
+```
+    def predict(self, X, node=None):
+        if node is None:
+            node = self.root
+
+        if node.value is not None:
+            return node.value
+
+        if X[node.feature_index] < node.threshold:
+            return self.predict(X, node.left)
+        else:
+            return self.predict(X, node.right)
+```
+
+#### Now we define the predict method, we begin by checking if the node is None, which it is by default, to the root node.
+
+#### We then check if the node.value contains a value, meaning is it a leaf node? If so, what is its value? 
+
+#### Finally in our final if statement we make a prediction. We take the root nodes feature_index and threshold, and if any of the values in the X 
+[feature_index] column are less than the threshold then recurse the number to the nodes left parameter and do the predict method again until we get the node that contains a value (leaf node). 
