@@ -209,7 +209,7 @@ class DecisionTreeRegressor:
 #### Finally in our final if statement we make a prediction. We take the root nodes feature_index and threshold, and if any of the values in the X 
 [feature_index] column are less than the threshold then recurse the number to the nodes left parameter and do the predict method again until we get the node that contains a value (leaf node). 
 
-### Random Forest
+## Random Forest
 
 #### The Random Forest model is an ensemble method.We now start our RandomForestRegressor Class by first setting up some variables.
 
