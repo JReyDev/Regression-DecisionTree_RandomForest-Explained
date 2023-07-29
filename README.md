@@ -251,3 +251,7 @@ class RandomForestRegressor:
         return np.mean(tree_preds, axis=0)
 ```
 #### The last method is used to predict. By utilizing list comprehension, we are able to create multiple predictions by looping through all our trees and save them to the list and we just average the values and get our result.
+
+
+## Example
+<img https://github.com/JReyDev/Regression-DecisionTree_RandomForest-Explained/blob/main/images/RegressionTree%20Example.png>
