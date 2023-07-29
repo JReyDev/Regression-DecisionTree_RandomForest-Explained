@@ -254,4 +254,4 @@ class RandomForestRegressor:
 
 
 ## Example
-<img https://github.com/JReyDev/Regression-DecisionTree_RandomForest-Explained/blob/main/images/RegressionTree%20Example.png>
+<img 'https://github.com/JReyDev/Regression-DecisionTree_RandomForest-Explained/blob/main/images/RegressionTree%20Example.png'>
