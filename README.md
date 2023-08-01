@@ -1,6 +1,29 @@
 # Regression-DecisionTree_RandomForest-Explained
 
-#### This guide is only for purpose of understanding how a decision tree regressor works but does not go into detail on ensemble methods, bootstrapping, utility of models, etc.
+#### This is for informational purposes only as these algorithms lack features. Implementing these algorithms with real life problems can be complex and this model would not suffice. I recommend using libraries such as Sci-Kit Learn, PyTorch, Keras, or Tensorflow for more complete algorithms with more features. This is just an explanation of how these algorithms generally work.
+
+#### This guides only purpose is to explain how a decision tree regressor works but does not go into detail on ensemble methods, bootstrapping, utility of models, etc.
+
+## Tree Nodes
+
+#### DecisionNode class represents nodes in the decision tree
+
+```
+class DecisionNode:
+    def __init__(self, feature_index=0, threshold=0, value=None, left=None, right=None):
+        self.feature_index = feature_index 
+        self.threshold = threshold  
+        self.value = value  
+        self.left = left  
+        self.right = right  
+```
+#### This class serves as our nodes, it will hold the variables:
+#### feature_index serves as the “selector” of the column of our data.
+#### threshold is our value at our node to create splits such as X < 1000, the threshold would be 1000.
+#### Value serves as the prediction if the node becomes a leaf node (“the answer”) and can no longer split or other stopping conditions are met.
+
+
+## Regression Decision Tree
 
 #### We first start by creating the essential functions of the decision tree. The word “split” will be used in the context of nodes and what threshold is set to divide the data such as X > 1000.
 
@@ -13,11 +36,11 @@ def _best_split(self, X, y):
 
 #### Our first function is called _best_split, it starts off by setting up some variables that we will use to decide our split.
 
-#### best_feature_index is the columns index where our feature is in our data, by default it is set to None. This is to ensure that if a split is not possible then return None for the index.
+#### best_feature_index represents the columns index where our feature lives in our data, by default it is set to None. This is to ensure that if a split is not possible then return None for the index.
 
-#### best_threshold is our value that we will be using to make our split, i.e., X < 1000 then 100 is the threshold. By default it is set to None as no data has been passed.
+#### best_threshold is our value that we will be using to make our split, i.e., X < 1000 then 100 is the threshold. By default it is set to None as no data has been passed to it yet.
 
-#### best_cost is our variance/MSE of the data group to its average value when a split is made, WE ARE LOOKING FOR THE SPLIT WITH THE LOWEST COST. It is by default set to np.inf as any number is less than positive infinity, this sets the first split cost found to be the lowest until another lower cost is found.
+#### best_cost is our variance/MSE of the data group when a split is made, WE ARE LOOKING FOR THE SPLIT WITH THE LOWEST COST. It is by default set to np.inf as any number is less than positive infinity, this sets the first split cost found to be the lowest until another lower cost is found.
 
 ```
 for feature_index in range(X.shape[1]):
@@ -89,27 +112,8 @@ if cost < best_cost:
 
 #### We do not divide by the number of values like in a variance/MSE calculation as this does not change the result much and only adds unnecessary arithmetic.
 
-## Tree Nodes
 
-#### Now that we know our functions then we can start the class 
-
-#### Node class to represent nodes in the decision tree
-
-```
-class DecisionNode:
-    def __init__(self, feature_index=0, threshold=0, value=None, left=None, right=None):
-        self.feature_index = feature_index 
-        self.threshold = threshold  
-        self.value = value  
-        self.left = left  
-        self.right = right  
-```
-#### This class serves as our nodes of our Decision Tree, it will hold the variables:
-#### feature_index serves as the “selector” of the column of our data.
-#### threshold is our value at our node to create splits such as X < 1000, the threshold would be 1000.
-#### Value serves as the prediction if the node becomes a leaf node (“the answer”) and can no longer split or other stopping conditions are met.
-
-
+#### Now we begin creating our DecisionTreeRegressor Class and initiliaze it with variables:
 ```
 class DecisionTreeRegressor:
     def __init__(self, min_samples_split=2, max_depth=2):
@@ -118,7 +122,7 @@ class DecisionTreeRegressor:
         self.min_samples_split = min_samples_split
         self.max_depth = max_depth
 ```
-#### Now we begin creating our DecisionTreeRegressor Class and initiliaze it with variables:
+
 
 #### Root serves as the starting point of the tree, by default it is empty as no tree exists yet.
 #### Min_samples_split is our minimum number of values left to make a split after splitting the group, default is 2.
